@@ -7,8 +7,8 @@ import {
   Text,
   StyleSheet,
   Button,
+  SafeAreaView,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {openDatabase} from 'react-native-sqlite-storage';
 import CustomButton from '../components/CustomButton';
 import CustomTextInput from '../components/CustomTextInput';
@@ -36,19 +36,9 @@ const AddPost = ({navigation}) => {
           'INSERT INTO table_posts (post_title,post_body) VALUES (?,?)',
           [inputs.post_title, inputs.post_body],
           (tx, results) => {
-            console.log('Results', results.rowsAffected);
+            // console.log('Results', results.rowsAffected);
             if (results.rowsAffected > 0) {
-              Alert.alert(
-                'Success',
-                'New post added successfully!',
-                [
-                  {
-                    text: 'OK',
-                    onPress: () => navigation.navigate('Home'),
-                  },
-                ],
-                {cancelable: false},
-              );
+              navigation.navigate('Home');
             } else Alert.alert('Post adding failed!');
           },
         );

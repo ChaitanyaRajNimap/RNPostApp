@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-const CustomButton = ({title, onPress}) => {
+const CustomSmallButton = ({title, onPress}) => {
   const onPressFunction = () => {
     return onPress();
   };
@@ -12,16 +12,17 @@ const CustomButton = ({title, onPress}) => {
   );
 };
 
-export default CustomButton;
+export default CustomSmallButton;
 
 const styles = StyleSheet.create({
   button: {
+    width: '40%',
     padding: 10,
     borderWidth: 2,
-    borderColor: '#612C59',
     borderRadius: 15,
+    borderColor: '#FF8600',
     margin: 10,
-    backgroundColor: '#612C59',
+    backgroundColor: '#FF8600',
   },
   buttonText: {
     color: '#fff',

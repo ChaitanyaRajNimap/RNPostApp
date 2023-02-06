@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
   SafeAreaView,
   FlatList,
+  Alert,
 } from 'react-native';
 import {openDatabase} from 'react-native-sqlite-storage';
 import CustomButton from '../components/CustomButton';
+import CustomSmallButton from '../components/CustomSmallButton';
 
 const db = openDatabase({name: 'PostDatabase.db'});
 
@@ -53,25 +55,57 @@ const HomeScreen = ({navigation}) => {
     return <View style={styles.listItemSeparator} />;
   };
 
+  //For deleting post
+  const DeletePost = id => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'DELETE FROM table_posts where post_id=?',
+        [id],
+        (tx, results) => {
+          // console.log('Results after delete : ', results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            console.log('Post deleted successfully');
+          }
+        },
+      );
+    });
+  };
+
+  const EditPost = id => {
+    navigation.navigate('EditPost', {
+      postId: id,
+    });
+  };
+
   //For list Item
   const ListItem = item => {
     return (
-      <TouchableOpacity style={styles.listItem}>
-        <View style={styles.titleContainer}>
-          <View>
-            <Text style={styles.title}>{item.post_title}</Text>
-          </View>
-          <View>
-            <Text style={styles.title}>Post No: {item.post_id}</Text>
-          </View>
-        </View>
+      <View style={styles.listItem}>
+        <Text style={styles.title}>{item.post_title}</Text>
         <Text style={styles.body}>{item.post_body}</Text>
-      </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <CustomSmallButton
+            title="Edit"
+            onPress={() => {
+              // console.log('POST TO EDIT : ', item.post_id);
+              return EditPost(item.post_id);
+            }}
+          />
+          <CustomSmallButton
+            title="Delete"
+            onPress={() => {
+              // console.log('POST TO DELTE : ', item.post_id);
+              return DeletePost(item.post_id);
+            }}
+          />
+        </View>
+        {/* <Button title="DELTE" /> */}
+      </View>
     );
   };
 
   const AddPost = () => {
-    console.log('Add Post!');
+    // console.log('Add Post!');
     navigation.navigate('AddPost');
   };
 
@@ -111,7 +145,7 @@ const styles = StyleSheet.create({
   },
   listItem: {
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 10,
     borderColor: '#612C59',
     borderWidth: 2,
     borderRadius: 15,
@@ -119,12 +153,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     backgroundColor: '#612C59',
   },
-  titleContainer: {
-    marginBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   title: {
+    marginBottom: 10,
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
@@ -139,5 +169,10 @@ const styles = StyleSheet.create({
     color: '#f00',
     fontSize: 25,
     fontWeight: 'bold',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

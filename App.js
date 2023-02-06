@@ -18,7 +18,7 @@ const App = () => {
           options={{
             title: 'Home',
             headerStyle: {
-              backgroundColor: '#51244A',
+              backgroundColor: '#612C59',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -32,7 +32,7 @@ const App = () => {
           options={{
             title: 'Add Post',
             headerStyle: {
-              backgroundColor: '#51244A',
+              backgroundColor: '#612C59',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -46,7 +46,7 @@ const App = () => {
           options={{
             title: 'Edit Post',
             headerStyle: {
-              backgroundColor: '#51244A',
+              backgroundColor: '#612C59',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
